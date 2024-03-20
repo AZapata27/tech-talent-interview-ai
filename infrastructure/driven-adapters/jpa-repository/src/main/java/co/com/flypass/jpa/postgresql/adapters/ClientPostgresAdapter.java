@@ -1,0 +1,36 @@
+package co.com.flypass.jpa.postgresql.adapters;
+
+import co.com.flypass.jpa.postgresql.mappers.IClientEntityMapper;
+import co.com.flypass.jpa.postgresql.repositories.ClientRepository;
+import co.com.flypass.models.Client;
+import co.com.flypass.ports.outbound.ClientPersistencePort;
+import org.springframework.stereotype.Repository;
+
+
+@Repository
+public class ClientPostgresAdapter implements ClientPersistencePort {
+    private final ClientRepository clientRepository;
+    private final IClientEntityMapper clientEntityMapper;
+
+    public ClientPostgresAdapter(ClientRepository clientRepository, IClientEntityMapper clientEntityMapper) {
+        this.clientRepository = clientRepository;
+        this.clientEntityMapper = clientEntityMapper;
+    }
+
+
+    @Override
+    public Client save(Client client) {
+        return clientEntityMapper.toClient(clientRepository.save(clientEntityMapper.toClientEntity(client)));
+    }
+
+    @Override
+    public Client update(Client client) {
+        return null;
+    }
+
+
+    @Override
+    public void delete(Long clientId) {
+        clientRepository.deleteById(clientId);
+    }
+}
