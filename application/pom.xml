@@ -36,5 +36,11 @@
             <artifactId>model</artifactId>
             <version>1.0.0</version>
         </dependency>
+
+        <dependency>
+            <groupId>co.com.flypass</groupId>
+            <artifactId>new-module</artifactId>
+            <version>1.0.0</version>
+        </dependency>
     </dependencies>
 </project>

@@ -9,6 +9,7 @@
         <module>domain/model</module>
         <module>domain/usecase</module>
         <module>infrastructure/driven-adapters/jpa-repository</module>
+        <module>infrastructure/driven-adapters/new-module</module>
         <module>infrastructure/entry-points/api-rest</module>
     </modules>
 
