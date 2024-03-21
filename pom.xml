@@ -11,6 +11,7 @@
         <module>infrastructure/driven-adapters/jpa-repository</module>
         <module>infrastructure/driven-adapters/new-module</module>
         <module>infrastructure/entry-points/api-rest</module>
+        <module>transversal</module>
     </modules>
 
     <parent>
@@ -35,6 +36,12 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>co.com.flypass</groupId>
+            <artifactId>transversal</artifactId>
+            <version>1.0.0</version>
         </dependency>
     </dependencies>
 </project>

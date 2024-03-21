@@ -17,7 +17,7 @@ public class IClientHandlerImpl implements IClientHandler {
         this.clientUseCasePort = clientUseCasePort;
         this.clientDTOMapper = clientDTOMapper;
     }
-    //todo: Agregar logica que no es del negocio necesaria para el buen funcionamiento. conversiones entre objetos.
+    //todo: Agregar logica que no es del negocio necesaria para el buen funcionamiento. conversiones entre objetos dtos y modelo.
     @Override
     public ClientResponseDTO save(ClientRequestDTO clientRequestDTO) {
         return clientDTOMapper.toClientResponseDto(clientUseCasePort.save(clientDTOMapper.toClient(clientRequestDTO)));

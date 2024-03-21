@@ -26,11 +26,13 @@
             <artifactId>jpa-repository</artifactId>
             <version>1.0.0</version>
         </dependency>
+
         <dependency>
             <groupId>co.com.flypass</groupId>
             <artifactId>usecase</artifactId>
             <version>1.0.0</version>
         </dependency>
+
         <dependency>
             <groupId>co.com.flypass</groupId>
             <artifactId>model</artifactId>
