@@ -5,9 +5,11 @@ import co.com.flypass.jpa.postgresql.repositories.ClientRepository;
 import co.com.flypass.models.Client;
 import co.com.flypass.ports.outbound.ClientPersistencePort;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 
 @Repository
+@Transactional
 public class ClientPostgresAdapter implements ClientPersistencePort {
     private final ClientRepository clientRepository;
     private final IClientEntityMapper clientEntityMapper;
@@ -25,7 +27,7 @@ public class ClientPostgresAdapter implements ClientPersistencePort {
 
     @Override
     public Client update(Client client) {
-        return null;
+        return clientEntityMapper.toClient(clientRepository.save(clientEntityMapper.toClientEntity(client)));
     }
 
 
