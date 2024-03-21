@@ -20,7 +20,7 @@ public class JpaConfig {
                                  @Value("${spring.datasource.password}") String password) {
         return DataSourceBuilder.create()
                 .driverClassName(driverClass)
-                .url("jdbc:postgresql://localhost:5432/testbd?currentSchema=public")
+                .url("jdbc:postgresql://localhost:5432/test?currentSchema=public")
                 .username(username)
                 .password(password)
                 .build();
