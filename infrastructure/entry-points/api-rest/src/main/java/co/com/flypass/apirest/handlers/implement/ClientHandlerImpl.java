@@ -9,11 +9,11 @@ import co.com.flypass.ports.inbound.ClientUseCasePort;
 import org.springframework.stereotype.Service;
 
 @Service
-public class IClientHandlerImpl implements IClientHandler {
+public class ClientHandlerImpl implements IClientHandler {
     private final ClientUseCasePort clientUseCasePort;
     private final IClientDTOMapper clientDTOMapper;
 
-    public IClientHandlerImpl(ClientUseCasePort clientUseCasePort, IClientDTOMapper clientDTOMapper) {
+    public ClientHandlerImpl(ClientUseCasePort clientUseCasePort, IClientDTOMapper clientDTOMapper) {
         this.clientUseCasePort = clientUseCasePort;
         this.clientDTOMapper = clientDTOMapper;
     }

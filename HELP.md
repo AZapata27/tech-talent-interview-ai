@@ -46,7 +46,7 @@ Este modulo es el capa más externa de la arquitectura, es el encargado de ensam
 crear los beans de los casos de use (UseCases) o configuraciones adicionales. 
 Además inicia la aplicación (es el unico modulo del proyecto donde encontraremos la función public static void main(String[] args).
 
-# Configurar nuevo proyecto con base a este arqueotipo.
+# Configurar nuevo proyecto con base a este arquetipo.
 
 ## Ajustar la modularizacion de acuerdo al nombre de tu proyecto.
 ### Cambia el nombre de la carpeta principal
@@ -56,17 +56,17 @@ usar guiones para separar palabrar al aplicar un nombre al proyecto
 ### cambiar el nombre del modulo principal
 usar guiones para separar palabrar al aplicar un nombre al proyecto
 
-Intellij permite realizar un refactor del modulo dando click derecho en la carpeta o modulo llamado backend-arqueotipo, esa opcion 
+Intellij permite realizar un refactor del modulo dando click derecho en la carpeta o modulo llamado backend-arquetipo, esa opcion 
 te permite cambiar el nombre de tu modulo padre o princpal, esto se reflejara en todos los modulos hijos, en caso de inconvenientes, 
 tendras que cambiar manualmente cada pom con referencia al artefactId principal. 
 ejemplo
 en el pom principal hay un apartado
 
                         <groupId>co.com.flypass</groupId>
-                        <artifactId>backend-arqueotipo</artifactId>
+                        <artifactId>backend-arquetipo</artifactId>
                         <version>0.0.1-SNAPSHOT</version>
-                        <name>backend-arqueotipo</name>
-                        <description>backend-arqueotipo</description>
+                        <name>backend-arquetipo</name>
+                        <description>backend-arquetipo</description>
 
 Cambialo a de acuerdo a lo siguiente 
 
@@ -80,7 +80,7 @@ los modulos hijos tienen un apartado de acuerdo a lo siguiente
 
                         <parent>
                             <groupId>co.com.flypass</groupId>
-                            <artifactId>backend-arqueotipo</artifactId>
+                            <artifactId>backend-arquetipo</artifactId>
                             <version>0.0.1-SNAPSHOT</version>
                         </parent>
 
