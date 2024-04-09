@@ -7,6 +7,13 @@ spring:
     name: backend-arquetipo
   profiles:
     active: dev
+  datasource:
+    driverClassName: org.postgresql.Driver
+    username: postgress
+    password: secret
+  jpa:
+    databasePlatform: org.hibernate.dialect.PostgreSQLDialect
+    show-sql: true
 server:
   servlet:
     context-path: "/backend-arquetipo"
