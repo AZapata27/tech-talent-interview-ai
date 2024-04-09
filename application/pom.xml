@@ -5,7 +5,7 @@
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>co.com.flypass</groupId>
-        <artifactId>backend-arqueotipo</artifactId>
+        <artifactId>backend-arquetipo</artifactId>
         <version>0.0.1-SNAPSHOT</version>
     </parent>
     <packaging>jar</packaging>
@@ -14,6 +14,7 @@
     <name>application</name>
     <description>application</description>
     <version>1.0.0</version>
+
     <dependencies>
         <dependency>
             <groupId>co.com.flypass</groupId>
@@ -45,4 +46,52 @@
             <version>1.0.0</version>
         </dependency>
     </dependencies>
+
+    <profiles>
+        <profile>
+            <id>dev</id>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+            <properties>
+                <profile.dir>src/main/resources/dev</profile.dir>
+            </properties>
+        </profile>
+        <profile>
+            <id>prod</id>
+            <properties>
+                <profile.dir>src/main/resources/prod</profile.dir>
+            </properties>
+        </profile>
+        <profile>
+            <id>cert</id>
+            <properties>
+                <profile.dir>src/main/resources/cert</profile.dir>
+            </properties>
+        </profile>
+    </profiles>
+
+    <build>
+        <resources>
+            <resource>
+                <directory>${profile.dir}</directory>
+                <filtering>false</filtering>
+            </resource>
+            <resource>
+                <directory>/src/main/resources</directory>
+                <filtering>false</filtering>
+            </resource>
+        </resources>
+        <plugins>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+                <configuration>
+                    <outputDirectory>../target</outputDirectory>
+                </configuration>
+            </plugin>
+        </plugins>
+<!--        nombrar el jar a su necesidad-->
+        <finalName>backend-arquetipo</finalName>
+    </build>
 </project>

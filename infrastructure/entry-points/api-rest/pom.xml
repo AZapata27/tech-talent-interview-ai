@@ -4,8 +4,9 @@
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>co.com.flypass</groupId>
-        <artifactId>backend-arqueotipo</artifactId>
+        <artifactId>backend-arquetipo</artifactId>
         <version>0.0.1-SNAPSHOT</version>
+        <relativePath>../../../pom.xml</relativePath>
     </parent>
     <packaging>jar</packaging>
 
@@ -41,6 +42,12 @@
         <dependency>
             <groupId>co.com.flypass</groupId>
             <artifactId>usecase</artifactId>
+            <version>1.0.0</version>
+        </dependency>
+
+        <dependency>
+            <groupId>co.com.flypass</groupId>
+            <artifactId>transversal</artifactId>
             <version>1.0.0</version>
         </dependency>
     </dependencies>

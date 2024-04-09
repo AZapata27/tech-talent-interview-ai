@@ -4,8 +4,9 @@
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>co.com.flypass</groupId>
-        <artifactId>backend-arqueotipo</artifactId>
+        <artifactId>backend-arquetipo</artifactId>
         <version>0.0.1-SNAPSHOT</version>
+        <relativePath>../../../pom.xml</relativePath>
     </parent>
     <packaging>jar</packaging>
 
