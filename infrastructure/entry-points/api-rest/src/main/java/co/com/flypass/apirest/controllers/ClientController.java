@@ -21,7 +21,7 @@ import java.util.Collections;
 import java.util.Map;
 
 @RestController
-@RequestMapping(value = "/client", produces = MediaType.APPLICATION_JSON_VALUE)
+@RequestMapping(value = "/api/v1/client", produces = MediaType.APPLICATION_JSON_VALUE)
 public class ClientController {
 
     private final IClientHandler clientHandler;
@@ -38,9 +38,8 @@ public class ClientController {
                     @ApiResponse(responseCode = "422", description = "no se pudo procesar la operacion de guardar",
                             content = @Content(mediaType = "application/json", schema = @Schema(ref = "#/components/schemas/Error")))
             })
-    @PostMapping(path = "/save")
+    @PostMapping
     public ResponseEntity<ClientResponseDTO> add(@Valid @RequestBody ClientRequestDTO clientRequestDTO) {
-
         return ResponseEntity.status(HttpStatus.CREATED).body(clientHandler.save(clientRequestDTO));
     }
 
