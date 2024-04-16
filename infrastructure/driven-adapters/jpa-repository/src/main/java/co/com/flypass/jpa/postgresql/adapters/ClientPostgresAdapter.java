@@ -3,14 +3,14 @@ package co.com.flypass.jpa.postgresql.adapters;
 import co.com.flypass.jpa.postgresql.mappers.IClientEntityMapper;
 import co.com.flypass.jpa.postgresql.repositories.ClientRepository;
 import co.com.flypass.models.Client;
-import co.com.flypass.ports.outbound.ClientPersistencePort;
+import co.com.flypass.ports.outbound.ClientRepositoryPort;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 
 @Repository
 @Transactional
-public class ClientPostgresAdapter implements ClientPersistencePort {
+public class ClientPostgresAdapter implements ClientRepositoryPort {
     private final ClientRepository clientRepository;
     private final IClientEntityMapper clientEntityMapper;
 

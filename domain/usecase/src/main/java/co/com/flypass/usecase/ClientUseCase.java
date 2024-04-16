@@ -2,29 +2,29 @@ package co.com.flypass.usecase;
 
 import co.com.flypass.models.Client;
 import co.com.flypass.ports.inbound.ClientUseCasePort;
-import co.com.flypass.ports.outbound.ClientPersistencePort;
+import co.com.flypass.ports.outbound.ClientRepositoryPort;
 
 
 public class ClientUseCase implements ClientUseCasePort {
 
-    private final ClientPersistencePort clientPersistence;
+    private final ClientRepositoryPort clientRepositoryPort;
 
 
-    public ClientUseCase(ClientPersistencePort clientPersistence) {
-        this.clientPersistence = clientPersistence;
+    public ClientUseCase(ClientRepositoryPort clientRepositoryPort) {
+        this.clientRepositoryPort = clientRepositoryPort;
     }
     //todo: Agregar logica de negocio necesaria para el buen funcionamiento.
 
     public Client save(Client client) {
-        return clientPersistence.save(client);
+        return clientRepositoryPort.save(client);
     }
 
     public Client update(Client client) {
-        return clientPersistence.update(client);
+        return clientRepositoryPort.update(client);
     }
 
     public void deleteClientById(Long clientId){
-        clientPersistence.delete(clientId);
+        clientRepositoryPort.delete(clientId);
 
     }
 }
