@@ -1,7 +1,7 @@
-package co.com.flypass.jpa.postgresql.repositories;
+package co.com.flypass.jpa.postgresql.command.repositories;
 
 
-import co.com.flypass.jpa.postgresql.entities.ClientEntity;
+import co.com.flypass.jpa.postgresql.command.entities.ClientEntity;
 import org.springframework.data.repository.CrudRepository;
 
 import java.util.List;

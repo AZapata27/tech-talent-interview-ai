@@ -1,9 +1,9 @@
-package co.com.flypass.jpa.postgresql.adapters;
+package co.com.flypass.jpa.postgresql.command.adapters;
 
-import co.com.flypass.jpa.postgresql.mappers.IClientEntityMapper;
-import co.com.flypass.jpa.postgresql.repositories.ClientRepository;
+import co.com.flypass.jpa.postgresql.command.mappers.IClientEntityMapper;
+import co.com.flypass.jpa.postgresql.command.repositories.ClientRepository;
 import co.com.flypass.models.Client;
-import co.com.flypass.ports.outbound.ClientRepositoryPort;
+import co.com.flypass.ports.outbound.ClientRepositoryCommandPort;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
@@ -11,14 +11,14 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Repository
 @Transactional
-public class ClientPostgresAdapter implements ClientRepositoryPort {
+public class ClientPostgresAdapterCommand implements ClientRepositoryCommandPort {
     private final ClientRepository clientRepository;
     private final IClientEntityMapper clientEntityMapper;
-    private KafkaTemplate<String, Object> kafkaTemplate;
+    private final KafkaTemplate<String, Object> kafkaTemplate;
 
     private static final String TOPIC = "cliente";
 
-    public ClientPostgresAdapter(ClientRepository clientRepository, IClientEntityMapper clientEntityMapper, KafkaTemplate<String, Object> kafkaTemplate) {
+    public ClientPostgresAdapterCommand(ClientRepository clientRepository, IClientEntityMapper clientEntityMapper, KafkaTemplate<String, Object> kafkaTemplate) {
         this.clientRepository = clientRepository;
         this.clientEntityMapper = clientEntityMapper;
         this.kafkaTemplate = kafkaTemplate;

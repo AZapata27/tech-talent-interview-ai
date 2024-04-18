@@ -1,4 +1,4 @@
-package co.com.flypass.jpa.postgresql.entities;
+package co.com.flypass.jpa.mysql.query.entities;
 
 import jakarta.persistence.*;
 

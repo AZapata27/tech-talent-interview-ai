@@ -1,7 +1,7 @@
-package co.com.flypass.jpa.postgresql.mappers.impl;
+package co.com.flypass.jpa.postgresql.command.mappers.impl;
 
-import co.com.flypass.jpa.postgresql.entities.ClientEntity;
-import co.com.flypass.jpa.postgresql.mappers.IClientEntityMapper;
+import co.com.flypass.jpa.postgresql.command.entities.ClientEntity;
+import co.com.flypass.jpa.postgresql.command.mappers.IClientEntityMapper;
 import co.com.flypass.models.Client;
 import org.springframework.stereotype.Service;
 

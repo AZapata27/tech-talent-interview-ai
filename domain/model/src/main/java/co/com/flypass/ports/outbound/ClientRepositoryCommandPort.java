@@ -3,7 +3,7 @@ package co.com.flypass.ports.outbound;
 
 import co.com.flypass.models.Client;
 
-public interface ClientRepositoryPort {
+public interface ClientRepositoryCommandPort {
 
     Client save(Client client);
 

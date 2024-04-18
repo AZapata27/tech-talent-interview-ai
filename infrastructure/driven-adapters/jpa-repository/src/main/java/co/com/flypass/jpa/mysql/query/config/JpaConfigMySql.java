@@ -1,26 +1,36 @@
-package co.com.flypass.jpa.postgresql.config;
+package co.com.flypass.jpa.mysql.query.config;
 
+import jakarta.persistence.EntityManagerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.jdbc.DataSourceBuilder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.orm.jpa.JpaVendorAdapter;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
+import org.springframework.transaction.PlatformTransactionManager;
 
 import javax.sql.DataSource;
 import java.util.Properties;
 
 @Configuration
-public class JpaConfig {
+public class JpaConfigMySql {
+    @Value("${spring.datasource.mysql.read.driverClassName}")
+    private String driverClass;
+    @Value("${spring.datasource.mysql.read.username}")
+    private String username;
+    @Value("${spring.datasource.mysql.read.password}")
+    private String password;
+    @Value("${spring.jpa.mysql.read.databasePlatform}")
+    private String dialect;
 
     @Bean
-    public DataSource datasource(@Value("${spring.datasource.driverClassName}") String driverClass,
-                                 @Value("${spring.datasource.username}") String username,
-                                 @Value("${spring.datasource.password}") String password) {
+    public DataSource datasource()
+    {
         return DataSourceBuilder.create()
                 .driverClassName(driverClass)
-                .url("jdbc:postgresql://localhost:5432/test?currentSchema=public")
+                .url("jdbc:mysql://localhost:3306/test?createDatabaseIfNotExist=true")
                 .username(username)
                 .password(password)
                 .build();
@@ -28,8 +38,8 @@ public class JpaConfig {
 
     @Bean
     public LocalContainerEntityManagerFactoryBean entityManagerFactory(
-            DataSource dataSource,
-            @Value("${spring.jpa.databasePlatform}") String dialect) {
+            DataSource dataSource
+            ) {
         LocalContainerEntityManagerFactoryBean em = new LocalContainerEntityManagerFactoryBean();
         em.setDataSource(dataSource);
         em.setPackagesToScan("co.com.flypass.jpa");
@@ -43,5 +53,10 @@ public class JpaConfig {
         em.setJpaProperties(properties);
 
         return em;
+    }
+
+    @Bean
+    public PlatformTransactionManager transactionManager(EntityManagerFactory entityManagerFactory) {
+        return new JpaTransactionManager(entityManagerFactory);
     }
 }

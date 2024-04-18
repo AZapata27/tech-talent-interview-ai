@@ -8,6 +8,8 @@ import co.com.flypass.apirest.mappers.IClientDTOMapper;
 import co.com.flypass.ports.inbound.ClientUseCasePort;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class ClientHandlerImpl implements IClientHandler {
     private final ClientUseCasePort clientUseCasePort;
@@ -31,5 +33,10 @@ public class ClientHandlerImpl implements IClientHandler {
     @Override
     public void deleteClientById(Long clientId) {
         clientUseCasePort.deleteClientById(clientId);
+    }
+
+    @Override
+    public List<ClientResponseDTO> findClientById(Long clientIdentificationNumber){
+        return clientUseCasePort.findClientById(clientIdentificationNumber).stream().map(clientDTOMapper::toClientResponseDto).toList();
     }
 }
