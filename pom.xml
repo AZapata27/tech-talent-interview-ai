@@ -16,15 +16,16 @@
         <module>domain/model</module>
         <module>domain/usecase</module>
         <module>infrastructure/driven-adapters/jpa-repository</module>
-        <module>infrastructure/driven-adapters/new-module</module>
+        <module>infrastructure/driven-adapters/kafka-producer</module>
         <module>infrastructure/entry-points/api-rest</module>
+        <module>infrastructure/entry-points/kafka-consumer</module>
         <module>transversal</module>
     </modules>
 
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>3.2.3</version>
+        <version>3.2.4</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
 

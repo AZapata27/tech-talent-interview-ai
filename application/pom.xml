@@ -15,38 +15,6 @@
     <description>application</description>
     <version>1.0.0</version>
 
-    <dependencies>
-        <dependency>
-            <groupId>co.com.flypass</groupId>
-            <artifactId>api-rest</artifactId>
-            <version>1.0.0</version>
-        </dependency>
-
-        <dependency>
-            <groupId>co.com.flypass</groupId>
-            <artifactId>jpa-repository</artifactId>
-            <version>1.0.0</version>
-        </dependency>
-
-        <dependency>
-            <groupId>co.com.flypass</groupId>
-            <artifactId>usecase</artifactId>
-            <version>1.0.0</version>
-        </dependency>
-
-        <dependency>
-            <groupId>co.com.flypass</groupId>
-            <artifactId>model</artifactId>
-            <version>1.0.0</version>
-        </dependency>
-
-        <dependency>
-            <groupId>co.com.flypass</groupId>
-            <artifactId>new-module</artifactId>
-            <version>1.0.0</version>
-        </dependency>
-    </dependencies>
-
     <profiles>
         <profile>
             <id>dev</id>
@@ -70,6 +38,56 @@
             </properties>
         </profile>
     </profiles>
+
+    <dependencies>
+        <dependency>
+            <groupId>co.com.flypass</groupId>
+            <artifactId>api-rest</artifactId>
+            <version>1.0.0</version>
+        </dependency>
+
+        <dependency>
+            <groupId>co.com.flypass</groupId>
+            <artifactId>jpa-repository</artifactId>
+            <version>1.0.0</version>
+        </dependency>
+
+        <dependency>
+            <groupId>co.com.flypass</groupId>
+            <artifactId>kafka-consumer</artifactId>
+            <version>1.0.0</version>
+        </dependency>
+
+        <dependency>
+            <groupId>co.com.flypass</groupId>
+            <artifactId>kafka-producer</artifactId>
+            <version>1.0.0</version>
+        </dependency>
+
+        <dependency>
+            <groupId>co.com.flypass</groupId>
+            <artifactId>usecase</artifactId>
+            <version>1.0.0</version>
+        </dependency>
+
+        <dependency>
+            <groupId>co.com.flypass</groupId>
+            <artifactId>model</artifactId>
+            <version>1.0.0</version>
+        </dependency>
+
+        <dependency>
+            <groupId>co.com.flypass</groupId>
+            <artifactId>kafka-producer</artifactId>
+            <version>1.0.0</version>
+        </dependency>
+
+        <dependency>
+            <groupId>co.com.flypass</groupId>
+            <artifactId>transversal</artifactId>
+            <version>1.0.0</version>
+        </dependency>
+    </dependencies>
 
     <build>
         <resources>
