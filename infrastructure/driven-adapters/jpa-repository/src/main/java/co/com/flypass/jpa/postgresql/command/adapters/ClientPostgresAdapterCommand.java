@@ -4,6 +4,7 @@ import co.com.flypass.jpa.postgresql.command.mappers.IClientEntityCommandMapper;
 import co.com.flypass.jpa.postgresql.command.repositories.ClientRepositoryPostgres;
 import co.com.flypass.models.Client;
 import co.com.flypass.ports.outbound.ClientRepositoryCommandPort;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
@@ -16,7 +17,8 @@ public class ClientPostgresAdapterCommand implements ClientRepositoryCommandPort
     private final IClientEntityCommandMapper clientEntityMapper;
     private final KafkaTemplate<String, Object> kafkaTemplate;
 
-    private static final String TOPIC = "cliente";
+    @Value("${kafka.topic.cliente}")
+    private String topic;
 
     public ClientPostgresAdapterCommand(ClientRepositoryPostgres clientRepositoryPostgres, IClientEntityCommandMapper clientEntityMapper, KafkaTemplate<String, Object> kafkaTemplate) {
         this.clientRepositoryPostgres = clientRepositoryPostgres;
@@ -28,7 +30,7 @@ public class ClientPostgresAdapterCommand implements ClientRepositoryCommandPort
     @Override
     public Client save(Client client) {
         client = clientEntityMapper.toClient(clientRepositoryPostgres.save(clientEntityMapper.toClientEntity(client)));
-        kafkaTemplate.send(TOPIC, "Cliente creado con el numero de identificacion: " + client.getIdentificationNumber());
+        kafkaTemplate.send(topic, "Cliente creado con el numero de identificacion: " + client.getIdentificationNumber());
         return client;
     }
 

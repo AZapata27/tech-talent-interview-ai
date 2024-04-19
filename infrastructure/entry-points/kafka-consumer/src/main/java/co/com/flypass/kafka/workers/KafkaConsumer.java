@@ -8,7 +8,7 @@ import java.util.logging.Logger;
 @Component
 public class KafkaConsumer {
     private static final Logger LOGGER = Logger.getLogger(KafkaConsumer.class.getName());
-    @KafkaListener(topics = "cliente", groupId = "backendArquetipoGroup")
+    @KafkaListener(topics = "${kafka.topic.cliente}", groupId = "${kafka.consumer.backendArquetipoGroupId}")
     public void listenClientCreated(String message) {
         LOGGER.info("Mensaje recibido del topic 'cliente': " + message);
     }
