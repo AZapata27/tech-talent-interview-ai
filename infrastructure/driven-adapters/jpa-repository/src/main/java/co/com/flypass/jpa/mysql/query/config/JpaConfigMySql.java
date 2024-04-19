@@ -1,20 +1,32 @@
 package co.com.flypass.jpa.mysql.query.config;
 
 import jakarta.persistence.EntityManagerFactory;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.jdbc.DataSourceBuilder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Primary;
+import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.orm.jpa.JpaVendorAdapter;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
 import org.springframework.transaction.PlatformTransactionManager;
+import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 import javax.sql.DataSource;
 import java.util.Properties;
 
 @Configuration
+@EnableTransactionManagement
+@EnableJpaRepositories(
+        entityManagerFactoryRef = "mysqlEntityManagerFactory",
+        transactionManagerRef = "mysqlTransactionManager",
+        basePackages = {
+                "co.com.flypass.jpa.mysql.query.repositories"
+        }
+)
 public class JpaConfigMySql {
     @Value("${spring.datasource.mysql.read.driverClassName}")
     private String driverClass;
@@ -24,25 +36,26 @@ public class JpaConfigMySql {
     private String password;
     @Value("${spring.jpa.mysql.read.databasePlatform}")
     private String dialect;
-
+    @Value("${spring.datasource.mysql.read.url}")
+    private String url;
     @Bean
-    public DataSource datasource()
+    public DataSource mysqlDataSource()
     {
         return DataSourceBuilder.create()
                 .driverClassName(driverClass)
-                .url("jdbc:mysql://localhost:3306/test?createDatabaseIfNotExist=true")
+                .url(url)
                 .username(username)
                 .password(password)
                 .build();
     }
 
-    @Bean
+    @Bean("mysqlEntityManagerFactory")
     public LocalContainerEntityManagerFactoryBean entityManagerFactory(
-            DataSource dataSource
+            @Qualifier("mysqlDataSource")  DataSource dataSource
             ) {
         LocalContainerEntityManagerFactoryBean em = new LocalContainerEntityManagerFactoryBean();
         em.setDataSource(dataSource);
-        em.setPackagesToScan("co.com.flypass.jpa");
+        em.setPackagesToScan("co.com.flypass.jpa.mysql.query.entities");
 
         JpaVendorAdapter vendorAdapter = new HibernateJpaVendorAdapter();
         em.setJpaVendorAdapter(vendorAdapter);
@@ -55,8 +68,10 @@ public class JpaConfigMySql {
         return em;
     }
 
-    @Bean
-    public PlatformTransactionManager transactionManager(EntityManagerFactory entityManagerFactory) {
+    @Bean("mysqlTransactionManager")
+    @Primary
+    public PlatformTransactionManager transactionManager(
+            @Qualifier("mysqlEntityManagerFactory")  EntityManagerFactory entityManagerFactory) {
         return new JpaTransactionManager(entityManagerFactory);
     }
 }

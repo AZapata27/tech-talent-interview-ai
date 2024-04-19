@@ -12,7 +12,6 @@ import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import jakarta.validation.Valid;
-import jakarta.validation.constraints.NotNull;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -33,7 +32,7 @@ public class ClientController {
     }
 
     @GetMapping("/by-identification-number/{identificationNumber}")
-    public ResponseEntity<List<ClientResponseDTO>> findClientById(@NotNull @PathVariable Long identificationNumber) {
+    public ResponseEntity<List<ClientResponseDTO>> findClientById(@PathVariable Long identificationNumber) {
         return ResponseEntity.status(HttpStatus.OK).body(clientHandler.findClientById(identificationNumber));
     }
 

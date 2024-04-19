@@ -1,12 +1,12 @@
 package co.com.flypass.jpa.postgresql.command.mappers.impl;
 
 import co.com.flypass.jpa.postgresql.command.entities.ClientEntity;
-import co.com.flypass.jpa.postgresql.command.mappers.IClientEntityMapper;
+import co.com.flypass.jpa.postgresql.command.mappers.IClientEntityCommandMapper;
 import co.com.flypass.models.Client;
 import org.springframework.stereotype.Service;
 
 @Service
-public class IClientEntityMapperImpl implements IClientEntityMapper {
+public class IClientEntityCommandMapperImpl implements IClientEntityCommandMapper {
     @Override
     public Client toClient(ClientEntity clientEntity) {
         if (clientEntity == null){

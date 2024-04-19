@@ -1,12 +1,12 @@
 package co.com.flypass.jpa.mysql.query.mappers.impl;
 
 import co.com.flypass.jpa.mysql.query.entities.ClientEntity;
-import co.com.flypass.jpa.mysql.query.mappers.IClientEntityMapper;
+import co.com.flypass.jpa.mysql.query.mappers.IClientEntityQueryMapper;
 import co.com.flypass.models.Client;
 import org.springframework.stereotype.Service;
 
 @Service
-public class IClientEntityMapperImpl implements IClientEntityMapper {
+public class IClientEntityQueryMapperImpl implements IClientEntityQueryMapper {
     @Override
     public Client toClient(ClientEntity clientEntity) {
         if (clientEntity == null){

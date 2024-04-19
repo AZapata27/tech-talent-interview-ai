@@ -19,6 +19,7 @@ public class ClientUseCase implements ClientUseCasePort {
         this.clientRepositoryCommandPort = clientRepositoryCommandPort;
         this.clientRepositoryQueryPort = clientRepositoryQueryPort;
     }
+
     //todo: Agregar logica de negocio necesaria para el buen funcionamiento.
 
     @Override
@@ -29,6 +30,7 @@ public class ClientUseCase implements ClientUseCasePort {
     public Client update(Client client) {
         return clientRepositoryCommandPort.update(client);
     }
+
     @Override
     public void deleteClientById(Long clientId){
         clientRepositoryCommandPort.delete(clientId);

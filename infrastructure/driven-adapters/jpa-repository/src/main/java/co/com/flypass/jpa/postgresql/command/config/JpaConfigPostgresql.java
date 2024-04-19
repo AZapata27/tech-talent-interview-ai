@@ -1,46 +1,59 @@
 package co.com.flypass.jpa.postgresql.command.config;
 
 import jakarta.persistence.EntityManagerFactory;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.jdbc.DataSourceBuilder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.orm.jpa.JpaVendorAdapter;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
 import org.springframework.transaction.PlatformTransactionManager;
+import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 import javax.sql.DataSource;
 import java.util.Properties;
 
 @Configuration
+@EnableTransactionManagement
+@EnableJpaRepositories(
+        entityManagerFactoryRef = "postgresqlEntityManagerFactory",
+        transactionManagerRef = "postgresqlTransactionManager",
+        basePackages = {
+                "co.com.flypass.jpa.postgresql.command.repositories"
+        }
+)
 public class JpaConfigPostgresql {
-    @Value("${spring.datasource.postgresql.driverClassName}")
+    @Value("${spring.datasource.postgresql.write.driverClassName}")
     private String driverClass;
-    @Value("${spring.datasource.postgresql.read.username}")
+    @Value("${spring.datasource.postgresql.write.username}")
     private String username;
     @Value("${spring.datasource.postgresql.write.password}")
     private String password;
-    @Value("${spring.jpa.postgresql.read.databasePlatform}")
+    @Value("${spring.jpa.postgresql.write.databasePlatform}")
     private String dialect;
+    @Value("${spring.datasource.postgresql.write.url}")
+    private String url;
 
     @Bean
-    public DataSource datasource() {
+    public DataSource postgresqlDataSource() {
         return DataSourceBuilder.create()
                 .driverClassName(driverClass)
-                .url("jdbc:postgresql://localhost:5432/test?currentSchema=public")
+                .url(url)
                 .username(username)
                 .password(password)
                 .build();
     }
 
-    @Bean
+    @Bean("postgresqlEntityManagerFactory")
     public LocalContainerEntityManagerFactoryBean entityManagerFactory(
-            DataSource dataSource) {
+            @Qualifier("postgresqlDataSource") DataSource dataSource) {
         LocalContainerEntityManagerFactoryBean em = new LocalContainerEntityManagerFactoryBean();
         em.setDataSource(dataSource);
-        em.setPackagesToScan("co.com.flypass.jpa");
+        em.setPackagesToScan("co.com.flypass.jpa.postgresql.command.entities");
 
         JpaVendorAdapter vendorAdapter = new HibernateJpaVendorAdapter();
         em.setJpaVendorAdapter(vendorAdapter);
@@ -53,8 +66,9 @@ public class JpaConfigPostgresql {
         return em;
     }
 
-    @Bean
-    public PlatformTransactionManager transactionManager(EntityManagerFactory entityManagerFactory) {
+    @Bean("postgresqlTransactionManager")
+    public PlatformTransactionManager transactionManager(
+            @Qualifier("postgresqlEntityManagerFactory") EntityManagerFactory entityManagerFactory) {
         return new JpaTransactionManager(entityManagerFactory);
     }
 }
