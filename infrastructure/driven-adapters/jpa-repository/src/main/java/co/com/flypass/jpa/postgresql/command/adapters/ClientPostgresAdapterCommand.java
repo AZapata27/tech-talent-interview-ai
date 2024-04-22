@@ -2,10 +2,10 @@ package co.com.flypass.jpa.postgresql.command.adapters;
 
 import co.com.flypass.jpa.postgresql.command.mappers.IClientEntityCommandMapper;
 import co.com.flypass.jpa.postgresql.command.repositories.ClientRepositoryPostgres;
+import co.com.flypass.ports.outbound.IMessageProducerPort;
 import co.com.flypass.models.Client;
 import co.com.flypass.ports.outbound.ClientRepositoryCommandPort;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -15,22 +15,22 @@ import org.springframework.transaction.annotation.Transactional;
 public class ClientPostgresAdapterCommand implements ClientRepositoryCommandPort {
     private final ClientRepositoryPostgres clientRepositoryPostgres;
     private final IClientEntityCommandMapper clientEntityMapper;
-    private final KafkaTemplate<String, Object> kafkaTemplate;
+    private final IMessageProducerPort messageProducer;
 
     @Value("${kafka.topic.cliente}")
     private String topic;
 
-    public ClientPostgresAdapterCommand(ClientRepositoryPostgres clientRepositoryPostgres, IClientEntityCommandMapper clientEntityMapper, KafkaTemplate<String, Object> kafkaTemplate) {
+    public ClientPostgresAdapterCommand(ClientRepositoryPostgres clientRepositoryPostgres, IClientEntityCommandMapper clientEntityMapper, IMessageProducerPort messageProducer) {
         this.clientRepositoryPostgres = clientRepositoryPostgres;
         this.clientEntityMapper = clientEntityMapper;
-        this.kafkaTemplate = kafkaTemplate;
+        this.messageProducer = messageProducer;
     }
 
 
     @Override
     public Client save(Client client) {
         client = clientEntityMapper.toClient(clientRepositoryPostgres.save(clientEntityMapper.toClientEntity(client)));
-        kafkaTemplate.send(topic, "Cliente creado con el numero de identificacion: " + client.getIdentificationNumber());
+        messageProducer.sendMessage(topic, "Cliente creado con el numero de identificacion: " + client.getIdentificationNumber());
         return client;
     }
 
