@@ -6,6 +6,7 @@ import co.com.flypass.jpa.mysql.query.repositories.ClientMySqlRepository;
 import co.com.flypass.ports.outbound.IMessageProducerPort;
 import co.com.flypass.models.Client;
 import co.com.flypass.ports.outbound.ClientRepositoryQueryPort;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -20,7 +21,8 @@ public class ClientMySqlAdapterQuery implements ClientRepositoryQueryPort {
     private final IMessageProducerPort messageProducer;
 
 
-    private static final String TOPIC = "cliente";
+    @Value("${kafka.topic.cliente}")
+    private String topic;
 
     public ClientMySqlAdapterQuery(ClientMySqlRepository clientMySqlRepository, IClientEntityQueryMapper clientEntityMapper, IMessageProducerPort messageProducer) {
         this.clientMySqlRepository = clientMySqlRepository;
@@ -31,7 +33,7 @@ public class ClientMySqlAdapterQuery implements ClientRepositoryQueryPort {
 
     @Override
     public List<Client> findClientById(Long clientIdentificationNumber) {
-        messageProducer.sendMessage(TOPIC, "Buscando cliente con el numero de identificacion: " + clientIdentificationNumber);
+        messageProducer.sendMessage(topic, "Buscando cliente con el numero de identificacion: " + clientIdentificationNumber);
         return clientMySqlRepository.findByIdentificationNumber(clientIdentificationNumber).stream().map(clientEntityMapper::toClient).toList();
     }
 }
