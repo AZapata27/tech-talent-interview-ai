@@ -1,82 +1,46 @@
 package co.com.flypass.error;
 
-public class ErrorResponse {
-
-    private String statusCode;
-    private String message;
-    private String technicalDetail;
-
-    public ErrorResponse() {
-    }
-
-    public ErrorResponse(String statusCode, String message, String technicalDetail) {
-        this.statusCode = statusCode;
-        this.message = message;
-        this.technicalDetail = technicalDetail;
-    }
-
-    public String getStatusCode() {
-        return statusCode;
-    }
-
-    public void setStatusCode(String statusCode) {
-        this.statusCode = statusCode;
-    }
-
-    public String getMessage() {
-        return message;
-    }
-
-    public void setMessage(String message) {
-        this.message = message;
-    }
-
-    public String getTechnicalDetail() {
-        return technicalDetail;
-    }
-
-    public void setTechnicalDetail(String technicalDetail) {
-        this.technicalDetail = technicalDetail;
-    }
+public record ErrorResponse(String exceptionName, String userMessage, String technicalMessage) {
 
     public static ErrorResponseBuilder builder() {
         return new ErrorResponseBuilder();
     }
 
-    public ErrorResponseBuilder toBuilder() {
-        return new ErrorResponseBuilder().statusCode(this.statusCode).message(this.message).technicalDetail(this.technicalDetail);
-    }
-
 
     public static class ErrorResponseBuilder {
-        private String statusCode;
-        private String message;
-        private String technicalDetail;
+        private String exceptionName;
+        private String userMessage;
+        private String technicalMessage;
 
         ErrorResponseBuilder() {
         }
 
-        public ErrorResponseBuilder statusCode(String statusCode) {
-            this.statusCode = statusCode;
+        public ErrorResponseBuilder exceptionName(String exceptionName) {
+            this.exceptionName = exceptionName;
             return this;
         }
 
-        public ErrorResponseBuilder message(String message) {
-            this.message = message;
+        public ErrorResponseBuilder userMessage(String userMessage) {
+            this.userMessage = userMessage;
             return this;
         }
 
-        public ErrorResponseBuilder technicalDetail(String technicalDetail) {
-            this.technicalDetail = technicalDetail;
+        public ErrorResponseBuilder technicalMessage(String technicalMessage) {
+            this.technicalMessage = technicalMessage;
             return this;
         }
 
         public ErrorResponse build() {
-            return new ErrorResponse(this.statusCode, this.message, this.technicalDetail);
+            return new ErrorResponse(this.exceptionName, this.userMessage, this.technicalMessage);
         }
 
+        @Override
         public String toString() {
-            return "ErrorResponse.ErrorResponseBuilder(statusCode=" + this.statusCode + ", message=" + this.message + ", technicalDetail=" + this.technicalDetail + ")";
+            return "ErrorResponseBuilder{" +
+                    "exceptionName='" + exceptionName + '\'' +
+                    ", userMessage='" + userMessage + '\'' +
+                    ", technicalMessage='" + technicalMessage + '\'' +
+                    '}';
         }
     }
 

@@ -2,60 +2,64 @@ package co.com.flypass.apirest.error;
 
 import co.com.flypass.constants.Constants;
 import co.com.flypass.error.ErrorResponse;
-import co.com.flypass.exception.BadRequestException;
-import co.com.flypass.exception.ValidationException;
+import co.com.flypass.exception.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 @RestControllerAdvice
 public class ControllerAdvisor {
 
-    @ExceptionHandler(ValidationException.class)
-    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
-    public ResponseEntity<ErrorResponse> handleValidationException(ValidationException validationException) {
+    private static final Logger LOGGER = LoggerFactory.getLogger(ControllerAdvisor.class);
+    private static final ConcurrentHashMap<String, HttpStatus> STATUS_MAP = new ConcurrentHashMap<>();
 
-        return getResponseEntity(
-                ErrorResponse.builder()
-                        .statusCode(validationException.getStatusCode())
-                        .message(validationException.getMessage())
-                        .technicalDetail(validationException.getTechnicalDetail())
-                .build(), HttpStatus.INTERNAL_SERVER_ERROR);
-    }
-
-    @ExceptionHandler(BadRequestException.class)
-    @ResponseStatus(HttpStatus.BAD_REQUEST)
-    public ResponseEntity<ErrorResponse> handleBadRequestException(BadRequestException badRequestException) {
-
-        return getResponseEntity(
-                ErrorResponse.builder()
-                        .statusCode(badRequestException.getStatusCode())
-                        .message(badRequestException.getMessage())
-                        .technicalDetail(badRequestException.getTechnicalDetail())
-                        .build(), HttpStatus.BAD_REQUEST);
+    public ControllerAdvisor() {
+        STATUS_MAP.put(BadRequestException.class.getSimpleName(), HttpStatus.BAD_REQUEST);
+        STATUS_MAP.put(ValidationException.class.getSimpleName(), HttpStatus.UNPROCESSABLE_ENTITY);
+        STATUS_MAP.put(NotFoundException.class.getSimpleName(), HttpStatus.NOT_FOUND);
+        STATUS_MAP.put(AlreadyExistException.class.getSimpleName(), HttpStatus.UNPROCESSABLE_ENTITY);
     }
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
-    @ResponseStatus(HttpStatus.BAD_REQUEST)
-    public ResponseEntity<ErrorResponse> handleMethodArgumentNotValidException(MethodArgumentNotValidException
-                                                                                    methodArgumentNotValidException) {
-        List<FieldError> fieldErrors = methodArgumentNotValidException.getBindingResult().getFieldErrors();
-        return getResponseEntity(ErrorResponse.builder()
-                .statusCode(String.valueOf(HttpStatus.BAD_REQUEST.value()))
-                .message(Constants.VALIDATION.concat(fieldErrors.get(0).getField()))
-                .technicalDetail(fieldErrors.get(0).getDefaultMessage())
-                .build(),HttpStatus.BAD_REQUEST);
+    public ResponseEntity<Object> handleValidationExceptions(MethodArgumentNotValidException ex) {
+        Map<String, String> errors = new HashMap<>();
+        ex.getBindingResult().getAllErrors().forEach(error -> {
+            String field = ((FieldError) error).getField();
+            String message = error.getDefaultMessage();
+            errors.put(field, message);
+        });
+        return ResponseEntity.badRequest().body(errors);
     }
 
+    @ExceptionHandler(BaseException.class)
+    public ResponseEntity<ErrorResponse> handleBadRequestException(BaseException baseException) {
+        HttpStatus status = STATUS_MAP.get(baseException.getClass().getSimpleName());
+        ErrorResponse errorResponse = ErrorResponse.builder()
+                .exceptionName(baseException.getClass().getSimpleName())
+                .userMessage(baseException.getUserMessage())
+                .technicalMessage(baseException.getTechnicalMessage())
+                .build();
+        return ResponseEntity.status(status).body(errorResponse);
+    }
 
-    private ResponseEntity<ErrorResponse> getResponseEntity(ErrorResponse errorResponse, HttpStatus httpStatus) {
-        return ResponseEntity.status(httpStatus).body(errorResponse);
+    @ExceptionHandler(Exception.class)
+    public ResponseEntity<ErrorResponse> handleException(Exception exception) {
+        LOGGER.error(exception.getMessage(), exception);
+        ErrorResponse errorResponse = ErrorResponse.builder()
+                .exceptionName(exception.getClass().getSimpleName())
+                .userMessage(Constants.DEFAULT_MESSAGE_ERROR)
+                .technicalMessage(exception.getMessage())
+                .build();
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(errorResponse);
     }
 
 }
