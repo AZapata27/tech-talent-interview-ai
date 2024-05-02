@@ -38,7 +38,7 @@
         <sonar.host.url>{URL}</sonar.host.url>
         <sonar.projectKey>{PROJECT_KEY}</sonar.projectKey>
         <sonar.coverage.jacoco.xmlReportPaths>{REPORT_UNIT}</sonar.coverage.jacoco.xmlReportPaths>
-        <sonar.coverage.exclusions>**/dtos/**,**/config/**,**/error/**,**/handlers/**,**/mappers/**,**/domain/**,**/application/**</sonar.coverage.exclusions>
+        <sonar.coverage.exclusions>**/dtos/**,**/config/**,**/error/**,**/domain/model/**,**/application/**</sonar.coverage.exclusions>
     </properties>
 
     <build>
