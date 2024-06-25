@@ -45,10 +45,5 @@
             <version>1.0.0</version>
         </dependency>
 
-        <dependency>
-            <groupId>co.com.flypass</groupId>
-            <artifactId>transversal</artifactId>
-            <version>1.0.0</version>
-        </dependency>
     </dependencies>
 </project>

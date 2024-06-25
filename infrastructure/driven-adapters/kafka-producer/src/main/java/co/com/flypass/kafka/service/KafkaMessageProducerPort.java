@@ -1,6 +1,5 @@
 package co.com.flypass.kafka.service;
 
-import co.com.flypass.ports.outbound.IMessageProducerPort;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
 

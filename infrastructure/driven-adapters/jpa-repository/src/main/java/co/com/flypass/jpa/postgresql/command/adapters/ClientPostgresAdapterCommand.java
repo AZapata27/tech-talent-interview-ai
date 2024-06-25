@@ -2,9 +2,7 @@ package co.com.flypass.jpa.postgresql.command.adapters;
 
 import co.com.flypass.jpa.postgresql.command.mappers.IClientEntityCommandMapper;
 import co.com.flypass.jpa.postgresql.command.repositories.ClientRepositoryPostgres;
-import co.com.flypass.ports.outbound.IMessageProducerPort;
 import co.com.flypass.models.Client;
-import co.com.flypass.ports.outbound.ClientRepositoryCommandPort;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;

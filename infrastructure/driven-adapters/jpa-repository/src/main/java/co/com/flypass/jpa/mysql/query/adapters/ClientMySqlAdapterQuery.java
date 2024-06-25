@@ -3,9 +3,7 @@ package co.com.flypass.jpa.mysql.query.adapters;
 
 import co.com.flypass.jpa.mysql.query.mappers.IClientEntityQueryMapper;
 import co.com.flypass.jpa.mysql.query.repositories.ClientMySqlRepository;
-import co.com.flypass.ports.outbound.IMessageProducerPort;
 import co.com.flypass.models.Client;
-import co.com.flypass.ports.outbound.ClientRepositoryQueryPort;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
